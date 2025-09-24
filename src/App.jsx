@@ -8,6 +8,7 @@ import StudentGrades from './components/StudentPortal/StudentGrades'
 import StudentSchedule from './components/StudentPortal/StudentSchedule'
 import TeacherGrades from './components/TeacherPortal/TeacherGrades'
 import DirectorReports from './components/DirectorPortal/DirectorReports'
+import StudentBooks from "./components/StudentPortal/StudentBooks.jsx";
 
 function App() {
   const [user, setUser] = useState(null)
@@ -48,6 +49,10 @@ function App() {
 
           <Route path="/student/grades" element={
             user?.role === 'student' ? <StudentGrades user={user} /> : <Navigate to="/login" />
+          } />
+
+           <Route path="/student/books" element={
+            user?.role === 'student' ? <StudentBooks user={user} /> : <Navigate to="/login" />
           } />
 
           <Route path="/student/schedule" element={

@@ -1,8 +1,9 @@
 // components/student/StudentPortal.jsx
 import { Routes, Route, Link, Outlet } from 'react-router-dom'
-import StudentDashboard from './StudentDashboard.jsx'
+
 import StudentSchedule from './StudentSchedule.jsx'
 import StudentGrades from './StudentGrades.jsx'
+import StudentBooks from "./StudentBooks.jsx";
 
 function StudentPortal({ user }) {
   return (
@@ -19,10 +20,10 @@ function StudentPortal({ user }) {
 
       {/* Nested routes */}
       <Routes>
-        <Route path="/" element={<StudentDashboard user={user} />} />
+        <Route path="/" element={<StudentPortal user={user} />} />
         <Route path="/schedule" element={<StudentSchedule user={user} />} />
         <Route path="/grades" element={<StudentGrades user={user} />} />
-        <Route path="/books" element={<div>Textbooks Content</div>} />
+        <Route path="/books" element={<StudentBooks user={user} />} />
       </Routes>
 
       <Outlet /> {/* This renders the nested route components */}
