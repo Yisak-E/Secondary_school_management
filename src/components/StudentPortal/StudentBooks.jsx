@@ -47,7 +47,7 @@ function StudentBooks({ user }) {
             </div>
 
             {/* PDF Viewer */}
-            {selectedBook && (
+            {selectedBook?(
                 <div className="mt-6">
                     <div className="flex justify-between items-center mb-4">
                         <h4 className="text-xl font-semibold">
@@ -62,7 +62,9 @@ function StudentBooks({ user }) {
                     </div>
                     <PdfViewer fileUrl={selectedBook.path} />
                 </div>
-            )}
+            ):(<>
+                <p> select a book</p>
+            </>)}
         </div>
     );
 }
