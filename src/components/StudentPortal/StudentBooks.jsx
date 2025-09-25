@@ -1,5 +1,5 @@
-import { Worker, Viewer } from '@react-pdf-viewer/core';
-import '@react-pdf-viewer/default-layout/lib/styles.css';
+import PdfViewer from "../PdfViewer.jsx";
+import math9 from '/books/Math9.pdf';
 
 
 
@@ -11,14 +11,12 @@ import '@react-pdf-viewer/default-layout/lib/styles.css';
          {
              grade: 9,
              subject: 'Mathmatics',
-             path: 'src/assets/books/Math9.pdf',
+             path: math9,
          }
      ]
     return (
         <>
-            <Worker workerUrl={`https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js`}>
-              <Viewer fileUrl={listOfBooks[0].path} />
-            </Worker>
+           <PdfViewer fileUrl={listOfBooks[0].path} />
         </>
     )
 }
