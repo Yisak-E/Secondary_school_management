@@ -10,7 +10,7 @@ function Navigation({ user, onLogout }) {
         { path: '/dashboard', label: 'Dashboard' },
         { path: '/student/schedule', label: 'Schedule' },
         { path: '/student/grades', label: 'Grades' },
-        { path: '/books', label: 'Books' }
+        { path: '/student/books', label: 'Books' }
       ]
     }
 

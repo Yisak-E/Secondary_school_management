@@ -11,7 +11,7 @@ function Dashboard({ user }) {
   const getDashboardCards = () => {
     const baseCards = [
       { title: 'Class Schedule', path: '/student/schedule', icon: '📅', color: 'bg-blue-500' },
-      { title: 'Textbooks', path: '/books', icon: '📚', color: 'bg-green-500' },
+      { title: 'Textbooks', path: '/student/books', icon: '📚', color: 'bg-green-500' },
       { title: 'Announcements', path: '/announcements', icon: '📢', color: 'bg-yellow-500' }
     ]
 
@@ -41,7 +41,7 @@ function Dashboard({ user }) {
   return (
     <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
       <header className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900">{getWelcomeMessage()}</h1>
+        <h1 className="text-3xl font-bold text-gray-900">{getWelcomeMessage()? getWelcomeMessage(): "Hello Ejere"}</h1>
         <p className="text-gray-600">{user.school} • {user.role.charAt(0).toUpperCase() + user.role.slice(1)}</p>
       </header>
 
