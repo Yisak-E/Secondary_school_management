@@ -1,1 +1,22 @@
 @import "tailwindcss";
+
+.img-bg-cover{
+    background-image: url("src/assets/school.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+body{
+    margin: 0;
+    padding: 0;
+}
+#root{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin:0;
+    padding: 0;
+}

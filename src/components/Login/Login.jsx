@@ -1,11 +1,13 @@
 // components/Login/Login.jsx
+import school from '../../assets/school.png'
 import { useState } from 'react'
 
 function Login({ onLogin }) {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
-    role: 'student'
+    role: 'student',
+
   })
 
   const handleSubmit = async (e) => {
@@ -16,40 +18,43 @@ function Login({ onLogin }) {
       name: 'Sample User',
       email: formData.email,
       role: formData.role,
-      school: 'Addis Ababa High School'
+      school: 'Ejere High School'
     }
 
     onLogin(mockUser)
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8">
+    <div className="min-h-screen flex flex-col lg:flex-row bg-gray-50 p-0 m-0">
+       <div className={'img-bg-cover  lg:w-37/50  h-screen'}>
+          <h3 className={' text-center text-3xl mt-10 shadow-xl font-bold'}>welcome to Ejere School management</h3>
+          <div className={'bg-blue-950 rounded-full w-40 h-40 mx-50 my-50 shadow-3xl'}></div>
+       </div>
+        <div className="right-0 lg:w-13/50 bg-gray-50">
+
         <div>
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-            School Management System
-          </h2>
-          <p className="mt-2 text-center text-sm text-gray-600">
+          <h3 className={'text-center text-2xl text-gray-500 font-serif font-bold italic mt-16'}>Ejere secondary School</h3>
+          <p className="mt-2 text-center text-sm text-gray-600 lg:text-lg ">
             Sign in to your account
           </p>
         </div>
 
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-          <div className="rounded-md shadow-sm -space-y-px">
-            <div>
+          <div className="rounded-md  shadow-sm -space-y-px ">
+            <div className="flex items-center justify-between w-7/8 mx-auto bg-white mt-3">
               <label htmlFor="email" className="sr-only">Email address</label>
               <input
                 id="email"
                 name="email"
                 type="email"
                 required
-                className="relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
+                className="relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm bg-gray-50"
                 placeholder="Email address"
                 value={formData.email}
                 onChange={(e) => setFormData({...formData, email: e.target.value})}
               />
             </div>
-            <div>
+            <div className={'flex items-center justify-between w-7/8 mx-auto mb-5'}>
               <label htmlFor="password" className="sr-only">Password</label>
               <input
                 id="password"
@@ -62,16 +67,12 @@ function Login({ onLogin }) {
                 onChange={(e) => setFormData({...formData, password: e.target.value})}
               />
             </div>
-          </div>
 
-          <div>
-            <label htmlFor="role" className="block text-sm font-medium text-gray-700 mb-1">
-              Role
-            </label>
+            <div className="flex items-center justify-between w-7/8 mx-auto bg-gray-50">
             <select
               id="role"
               name="role"
-              className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md"
+              className="my-auto mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md"
               value={formData.role}
               onChange={(e) => setFormData({...formData, role: e.target.value})}
             >
@@ -80,8 +81,9 @@ function Login({ onLogin }) {
               <option value="director">Director</option>
             </select>
           </div>
+          </div>
 
-          <div>
+          <div className={'w-7/8 mx-auto mb-5'}>
             <button
               type="submit"
               className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
