@@ -42,7 +42,7 @@ function Dashboard({ user }) {
     <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
       <header className="mb-8">
         <h1 className="text-3xl font-bold text-gray-900">{getWelcomeMessage()? getWelcomeMessage(): "Hello Ejere"}</h1>
-        <p className="text-gray-600">{user.school} • {user.role.charAt(0).toUpperCase() + user.role.slice(1)}</p>
+        <p className="text-gray-600">{user.role}</p>
       </header>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">

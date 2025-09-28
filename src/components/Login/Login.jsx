@@ -1,75 +1,63 @@
 // components/Login/Login.jsx
-import { signInWithEmailAndPassword, onAuthStateChanged} from 'firebase/auth'
-import {auth} from '../../fireConfig.js'
-import {useEffect, useState} from 'react'
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../fireConfig.js";
 
-function Login({ onLogin }) {
-  const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-    role: '',
+function Login() {
+  const navigate = useNavigate();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
 
-  })
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    setError(''); // Clear previous errors
 
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(null)
-  const [user, setUser] = useState({
-    email: '',
-    password: '',
-    role: '',
-  })
-
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      console.log("Auth state changed", user);
-      if (user) {
-        setUser(user);
-
-        console.log("navigating to landing page")
-      }
-
-    })
-  })
-
-
-
-  const handleSubmit = async (e) => {
-    e.preventDefault()
-
-    onLogin(user)
-  }
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      // The onAuthStateChanged listener in App.jsx will handle the redirect.
+      // We can navigate here as a fallback or for immediate feedback.
+      navigate('/dashboard');
+    } catch (error) {
+      console.error("Login Error:", error);
+      setError("Failed to sign in. Please check your email and password.");
+    }
+  };
 
   return (
     <div className="min-h-screen flex flex-col lg:flex-row bg-gray-50 p-0 m-0">
-       <div className={'img-bg-cover  lg:w-37/50  h-screen'}>
-          <h3 className={' text-center text-3xl mt-10 shadow-xl font-bold'}>welcome to Ejere School management</h3>
-          <div className={'bg-blue-950 rounded-full w-40 h-40 mx-50 my-50 shadow-3xl'}></div>
-       </div>
-        <div className="right-0 lg:w-13/50 bg-gray-50">
+      <div className={' img-bg-cover lg:w-3/5 h-screen flex flex-col items-center justify-center text-white p-4'}>
+        <h3 className={'text-center text-black font-serif text-4xl  font-bold drop-shadow-lg'}>
+          Welcome to Ejere School Management
+        </h3>
+      </div>
+      <div className="right-0 lg:w-2/5 bg-gray-50 flex flex-col justify-center p-8">
 
         <div>
-          <h3 className={'text-center text-2xl text-gray-500 font-serif font-bold italic mt-16'}>Ejere secondary School</h3>
-          <p className="mt-2 text-center text-sm text-gray-600 lg:text-lg ">
+          <h3 className={'text-center text-2xl text-gray-700 font-bold mb-2'}>Ejere Secondary School</h3>
+          <p className="mt-2 text-center text-sm text-gray-600">
             Sign in to your account
           </p>
         </div>
 
-        <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-          <div className="rounded-md  shadow-sm -space-y-px ">
-            <div className="flex items-center justify-between w-7/8 mx-auto bg-white mt-3">
+        <form className="mt-8 space-y-6" onSubmit={handleLogin}>
+          {error && <p className="text-red-500 text-sm text-center">{error}</p>}
+          <div className="rounded-md shadow-sm -space-y-px">
+            <div>
               <label htmlFor="email" className="sr-only">Email address</label>
               <input
                 id="email"
                 name="email"
                 type="email"
                 required
-                className="relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm bg-gray-50"
+                className="relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
                 placeholder="Email address"
-                value={formData.email}
-                onChange={(e) => setFormData({...formData, email: e.target.value})}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </div>
-            <div className={'flex items-center justify-between w-7/8 mx-auto mb-5'}>
+            <div>
               <label htmlFor="password" className="sr-only">Password</label>
               <input
                 id="password"
@@ -78,27 +66,14 @@ function Login({ onLogin }) {
                 required
                 className="relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
                 placeholder="Password"
-                value={formData.password}
-                onChange={(e) => setFormData({...formData, password: e.target.value})}
+                value={password}
+                autoComplete={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
             </div>
-
-            <div className="flex items-center justify-between w-7/8 mx-auto bg-gray-50">
-            <select
-              id="role"
-              name="role"
-              className="my-auto mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md"
-              value={formData.role}
-              onChange={(e) => setFormData({...formData, role: e.target.value})}
-            >
-              <option value="student">Student</option>
-              <option value="teacher">Teacher</option>
-              <option value="director">Director</option>
-            </select>
-          </div>
           </div>
 
-          <div className={'w-7/8 mx-auto mb-5'}>
+          <div>
             <button
               type="submit"
               className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
@@ -109,7 +84,7 @@ function Login({ onLogin }) {
         </form>
       </div>
     </div>
-  )
+  );
 }
 
-export default Login
+export default Login;

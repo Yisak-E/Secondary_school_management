@@ -1,8 +1,8 @@
 // components/Shared/Navigation.jsx
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom';
 
 function Navigation({ user, onLogout }) {
-  const location = useLocation()
+  const location = useLocation();
 
   const getNavLinks = () => {
     if (user.role === 'student') {
@@ -11,7 +11,7 @@ function Navigation({ user, onLogout }) {
         { path: '/student/schedule', label: 'Schedule' },
         { path: '/student/grades', label: 'Grades' },
         { path: '/student/books', label: 'Books' }
-      ]
+      ];
     }
 
     if (user.role === 'teacher') {
@@ -19,7 +19,7 @@ function Navigation({ user, onLogout }) {
         { path: '/dashboard', label: 'Dashboard' },
         { path: '/teacher/grades', label: 'Grades' },
         { path: '/teacher/attendance', label: 'Attendance' }
-      ]
+      ];
     }
 
     if (user.role === 'director') {
@@ -27,13 +27,13 @@ function Navigation({ user, onLogout }) {
         { path: '/dashboard', label: 'Dashboard' },
         { path: '/director/reports', label: 'Reports' },
         { path: '/director/students', label: 'Students' }
-      ]
+      ];
     }
 
-    return []
-  }
+    return [];
+  };
 
-  const isActive = (path) => location.pathname === path
+  const isActive = (path) => location.pathname === path;
 
   return (
     <nav className="bg-white shadow-lg fixed w-full top-0 z-50">
@@ -51,8 +51,8 @@ function Navigation({ user, onLogout }) {
                 key={link.path}
                 to={link.path}
                 className={`px-3 py-2 rounded-md text-sm font-medium ${
-                  isActive(link.path) 
-                    ? 'bg-blue-100 text-blue-700' 
+                  isActive(link.path)
+                    ? 'bg-blue-100 text-blue-700'
                     : 'text-gray-700 hover:bg-gray-100'
                 }`}
               >
@@ -61,7 +61,8 @@ function Navigation({ user, onLogout }) {
             ))}
 
             <div className="flex items-center space-x-2 ml-4">
-              <span className="text-sm text-gray-700">Welcome, {user.name}</span>
+              {/* FIX: Use user.displayName or user.email as fallback */}
+              <span className="text-sm text-gray-700">Welcome, {user.displayName || user.email}</span>
               <button
                 onClick={onLogout}
                 className="bg-gray-200 hover:bg-gray-300 text-gray-800 px-3 py-1 rounded-md text-sm font-medium"
@@ -73,7 +74,7 @@ function Navigation({ user, onLogout }) {
         </div>
       </div>
     </nav>
-  )
+  );
 }
 
-export default Navigation
+export default Navigation;
