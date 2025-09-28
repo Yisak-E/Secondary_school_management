@@ -9,6 +9,7 @@ import StudentSchedule from './components/StudentPortal/StudentSchedule'
 import TeacherGrades from './components/TeacherPortal/TeacherGrades'
 import DirectorReports from './components/DirectorPortal/DirectorReports'
 import StudentBooks from "./components/StudentPortal/StudentBooks.jsx";
+import Landing from './components/Landing'
 
 function App() {
   const [user, setUser] = useState(null)
@@ -30,7 +31,7 @@ function App() {
   const handleLogout = () => {
     setUser(null)
     localStorage.removeItem('schoolUser')
-    navigate('/login')
+    navigate('/')
   }
 
   return (
@@ -39,6 +40,8 @@ function App() {
 
       <main className={user ? "pt-16" : ""}>
         <Routes>
+          <Route path='/' element={<Landing />}/>
+
           <Route path="/login" element={
             user ? <Navigate to="/dashboard" /> : <Login onLogin={handleLogin} />
           } />
@@ -67,7 +70,7 @@ function App() {
             user?.role === 'director' ? <DirectorReports user={user} /> : <Navigate to="/login" />
           } />
 
-          <Route path="/" element={<Navigate to={user ? "/dashboard" : "/login"} />} />
+          <Route path="/" element={<Navigate to={user ? "/" : "/login"} />} />
 
           <Route path="*" element={
             <div className="flex items-center justify-center min-h-screen">

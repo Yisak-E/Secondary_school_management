@@ -1,27 +1,42 @@
 // components/Login/Login.jsx
-
-import { useState } from 'react'
+import { signInWithEmailAndPassword, onAuthStateChanged} from 'firebase/auth'
+import {auth} from '../../fireConfig.js'
+import {useEffect, useState} from 'react'
 
 function Login({ onLogin }) {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
-    role: 'student',
+    role: '',
 
   })
+
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
+  const [user, setUser] = useState({
+    email: '',
+    password: '',
+    role: '',
+  })
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      console.log("Auth state changed", user);
+      if (user) {
+        setUser(user);
+
+        console.log("navigating to landing page")
+      }
+
+    })
+  })
+
+
 
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    const mockUser = {
-      id: '1',
-      name: 'Sample User',
-      email: formData.email,
-      role: formData.role,
-      school: 'Ejere High School'
-    }
-
-    onLogin(mockUser)
+    onLogin(user)
   }
 
   return (
