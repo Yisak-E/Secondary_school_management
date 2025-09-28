@@ -1,5 +1,5 @@
 // components/Login/Login.jsx
-import school from '../../assets/school.png'
+
 import { useState } from 'react'
 
 function Login({ onLogin }) {
