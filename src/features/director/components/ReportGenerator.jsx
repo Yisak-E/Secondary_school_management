@@ -17,7 +17,6 @@ function ReportGenerator() {
   ];
 
   const handleGenerateReport = () => {
-    // Simulate report generation
     const mockReport = {
       id: Date.now(),
       type: reportType,
@@ -25,101 +24,102 @@ function ReportGenerator() {
       generatedAt: new Date().toLocaleString(),
       data: `Mock ${reportTemplates.find(r => r.id === reportType)?.name} data for ${dateRange.start} to ${dateRange.end}`
     };
-    
+
     setGeneratedReport(mockReport);
   };
 
   const handleExportReport = (format) => {
     console.log(`Exporting report as ${format}`);
-    // Implementation for PDF/Excel export would go here
   };
 
   return (
-    <div className="report-generator">
-      <h2>Report Generator</h2>
-      
-      <div className="report-controls">
-        <div className="form-group">
-          <label>Report Type</label>
-          <select 
-            value={reportType}
-            onChange={(e) => setReportType(e.target.value)}
-            className="form-select"
-          >
-            {reportTemplates.map(template => (
-              <option key={template.id} value={template.id}>
-                {template.name}
-              </option>
-            ))}
-          </select>
-          <small className="form-text">
-            {reportTemplates.find(t => t.id === reportType)?.description}
-          </small>
-        </div>
+    <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+      <h2 className="text-2xl font-bold text-gray-900 mb-6">Report Generator</h2>
 
-        <div className="date-range">
-          <div className="form-group">
-            <label>Start Date</label>
-            <input
-              type="date"
-              value={dateRange.start}
-              onChange={(e) => setDateRange(prev => ({ ...prev, start: e.target.value }))}
-              className="form-input"
-            />
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="space-y-6">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Report Type</label>
+            <select
+              value={reportType}
+              onChange={(e) => setReportType(e.target.value)}
+              className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            >
+              {reportTemplates.map(template => (
+                <option key={template.id} value={template.id}>
+                  {template.name}
+                </option>
+              ))}
+            </select>
+            <p className="mt-1 text-sm text-gray-500">
+              {reportTemplates.find(t => t.id === reportType)?.description}
+            </p>
           </div>
-          
-          <div className="form-group">
-            <label>End Date</label>
-            <input
-              type="date"
-              value={dateRange.end}
-              onChange={(e) => setDateRange(prev => ({ ...prev, end: e.target.value }))}
-              className="form-input"
-            />
-          </div>
-        </div>
 
-        <button 
-          onClick={handleGenerateReport}
-          disabled={!dateRange.start || !dateRange.end}
-          className="btn btn-primary"
-        >
-          Generate Report
-        </button>
-      </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Start Date</label>
+              <input
+                type="date"
+                value={dateRange.start}
+                onChange={(e) => setDateRange(prev => ({ ...prev, start: e.target.value }))}
+                className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
+            </div>
 
-      {generatedReport && (
-        <div className="generated-report">
-          <div className="report-header">
-            <h3>
-              {reportTemplates.find(r => r.id === generatedReport.type)?.name}
-            </h3>
-            <div className="report-actions">
-              <button 
-                onClick={() => handleExportReport('pdf')}
-                className="btn btn-outline"
-              >
-                Export PDF
-              </button>
-              <button 
-                onClick={() => handleExportReport('excel')}
-                className="btn btn-outline"
-              >
-                Export Excel
-              </button>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">End Date</label>
+              <input
+                type="date"
+                value={dateRange.end}
+                onChange={(e) => setDateRange(prev => ({ ...prev, end: e.target.value }))}
+                className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
             </div>
           </div>
-          
-          <div className="report-meta">
-            <span>Period: {generatedReport.dateRange.start} to {generatedReport.dateRange.end}</span>
-            <span>Generated: {generatedReport.generatedAt}</span>
-          </div>
-          
-          <div className="report-content">
-            <pre>{generatedReport.data}</pre>
-          </div>
+
+          <button
+            onClick={handleGenerateReport}
+            disabled={!dateRange.start || !dateRange.end}
+            className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors duration-200"
+          >
+            Generate Report
+          </button>
         </div>
-      )}
+
+        {generatedReport && (
+          <div className="bg-gray-50 rounded-lg p-6">
+            <div className="flex justify-between items-start mb-4">
+              <h3 className="text-lg font-semibold text-gray-900">
+                {reportTemplates.find(r => r.id === generatedReport.type)?.name}
+              </h3>
+              <div className="flex space-x-2">
+                <button
+                  onClick={() => handleExportReport('pdf')}
+                  className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors duration-200"
+                >
+                  Export PDF
+                </button>
+                <button
+                  onClick={() => handleExportReport('excel')}
+                  className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors duration-200"
+                >
+                  Export Excel
+                </button>
+              </div>
+            </div>
+
+            <div className="text-sm text-gray-600 space-y-1 mb-4">
+              <div>Period: {generatedReport.dateRange.start} to {generatedReport.dateRange.end}</div>
+              <div>Generated: {generatedReport.generatedAt}</div>
+            </div>
+
+            <div className="bg-white p-4 rounded border">
+              <pre className="text-sm text-gray-800 whitespace-pre-wrap">{generatedReport.data}</pre>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

@@ -15,65 +15,66 @@ function DirectorHeader({ onNewAnnouncement, systemStats }) {
   };
 
   return (
-    <header className="director-header">
-      <div className="header-content">
-        <div className="header-title">
-          <h1>Director Dashboard</h1>
-          <p>Manage school operations and analytics</p>
-        </div>
-        
-        <div className="header-stats">
-          <div className="stat-card">
-            <span className="stat-number">{systemStats.totalStudents}</span>
-            <span className="stat-label">Total Students</span>
+    <header className="bg-white shadow-sm border-b border-gray-200">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+          <div className="flex-1">
+            <h1 className="text-2xl font-bold text-gray-900">Director Dashboard</h1>
+            <p className="text-gray-600">Manage school operations and analytics</p>
           </div>
-          <div className="stat-card">
-            <span className="stat-number">{systemStats.totalTeachers}</span>
-            <span className="stat-label">Teachers</span>
-          </div>
-          <div className="stat-card warning">
-            <span className="stat-number">{systemStats.pendingRegistrations}</span>
-            <span className="stat-label">Pending Registrations</span>
-          </div>
-          <div className="stat-card warning">
-            <span className="stat-number">{systemStats.pendingFeeVerifications}</span>
-            <span className="stat-label">Pending Fees</span>
-          </div>
-        </div>
 
-        <div className="header-actions">
-          <button 
-            onClick={() => setShowAnnouncementModal(true)}
-            className="btn btn-primary"
-          >
-            New Announcement
-          </button>
+          <div className="flex flex-wrap gap-4">
+            <div className="flex items-center space-x-4">
+              <div className="text-center">
+                <div className="text-lg font-semibold text-gray-900">{systemStats.totalStudents}</div>
+                <div className="text-sm text-gray-500">Total Students</div>
+              </div>
+              <div className="text-center">
+                <div className="text-lg font-semibold text-gray-900">{systemStats.totalTeachers}</div>
+                <div className="text-sm text-gray-500">Teachers</div>
+              </div>
+              <div className="text-center">
+                <div className="text-lg font-semibold text-yellow-600">{systemStats.pendingRegistrations}</div>
+                <div className="text-sm text-gray-500">Pending Registrations</div>
+              </div>
+              <div className="text-center">
+                <div className="text-lg font-semibold text-red-600">{systemStats.pendingFeeVerifications}</div>
+                <div className="text-sm text-gray-500">Pending Fees</div>
+              </div>
+            </div>
+
+            <button
+              onClick={() => setShowAnnouncementModal(true)}
+              className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-200"
+            >
+              New Announcement
+            </button>
+          </div>
         </div>
       </div>
 
-      {/* Announcement Modal */}
       {showAnnouncementModal && (
-        <div className="modal-overlay">
-          <div className="modal-content">
-            <h3>Create New Announcement</h3>
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+          <div className="bg-white rounded-lg shadow-xl max-w-md w-full p-6">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">Create New Announcement</h3>
             <form onSubmit={handleSubmitAnnouncement}>
               <textarea
                 value={announcementText}
                 onChange={(e) => setAnnouncementText(e.target.value)}
                 placeholder="Enter announcement message..."
                 rows="4"
-                className="announcement-textarea"
+                className="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 required
               />
-              <div className="modal-actions">
-                <button 
-                  type="button" 
+              <div className="flex justify-end space-x-3 mt-4">
+                <button
+                  type="button"
                   onClick={() => setShowAnnouncementModal(false)}
-                  className="btn btn-secondary"
+                  className="px-4 py-2 text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors duration-200"
                 >
                   Cancel
                 </button>
-                <button type="submit" className="btn btn-primary">
+                <button type="submit" className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200">
                   Publish Announcement
                 </button>
               </div>
