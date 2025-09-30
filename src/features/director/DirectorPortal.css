@@ -1,0 +1,68 @@
+/* features/director/DirectorPortal.css */
+.director-portal {
+  min-height: 100vh;
+  background-color: #f5f5f5;
+}
+
+.portal-content {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.portal-sidebar {
+  width: 300px;
+  flex-shrink: 0;
+}
+
+.portal-main {
+  flex: 1;
+  min-width: 0;
+}
+
+.recent-announcements {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  margin-top: 20px;
+}
+
+.recent-announcements h3 {
+  margin-bottom: 15px;
+  color: #333;
+  font-size: 16px;
+}
+
+.announcement-item {
+  padding: 10px;
+  border-left: 3px solid #007bff;
+  background: #f8f9fa;
+  margin-bottom: 10px;
+}
+
+.announcement-text {
+  margin: 0 0 5px 0;
+  font-size: 14px;
+}
+
+.announcement-time {
+  color: #666;
+  font-size: 12px;
+}
+
+.no-announcements {
+  color: #666;
+  font-style: italic;
+  text-align: center;
+}
+
+.welcome-message {
+  text-align: center;
+  padding: 40px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
