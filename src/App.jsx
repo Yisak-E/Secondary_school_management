@@ -10,6 +10,7 @@ import Navigation from './components/Shared/Navigation';
 import StudentGrades from './components/StudentPortal/StudentGrades';
 import StudentSchedule from './components/StudentPortal/StudentSchedule';
 import TeacherGrades from './components/TeacherPortal/TeacherGrades';
+import TeacherAttendance from './components/TeacherPortal/TeacherAttendance';
 import StudentBooks from "./components/StudentPortal/StudentBooks.jsx";
 import Landing from './components/Landing';
 
@@ -18,6 +19,7 @@ import DirectorPortal from './features/director/DirectorPortal';
 import StudentManagement from './features/director/components/StudentManagement';
 import ReportGenerator from './features/director/components/ReportGenerator';
 import SystemSettings from './features/director/components/SystemSettings';
+import TeacherSchedule from "./components/TeacherPortal/TeacherSchedule.jsx";
 
 function App() {
   const navigate = useNavigate();
@@ -89,12 +91,14 @@ function App() {
 
       <main className={user ? "pt-16" : ""}>
         <Routes>
+          {/* Public Routes */}
           <Route path='/' element={<Landing />} />
 
           <Route path="/login" element={
             user ? <Navigate to="/dashboard" /> : <Login />
           } />
 
+          {/* Protected Routes */}
           <Route path="/dashboard" element={
             user ? <Dashboard user={user} /> : <Navigate to="/login" />
           } />
@@ -117,12 +121,59 @@ function App() {
             user?.role === 'teacher' ? <TeacherGrades user={user} /> : <Navigate to="/login" />
           } />
 
-          {/* Director Routes */}
+          <Route path="/teacher/attendance" element={
+            user?.role === 'teacher' ? <TeacherAttendance user={user} /> : <Navigate to="/login" />
+          } />
+
+          <Route path="/teacher/schedule" element={
+            user?.role === 'teacher' ? <TeacherSchedule user={user} /> : <Navigate to="/login" />
+          } />
+
+          {/* Director Routes with nested layout */}
           <Route path="/director" element={
             user?.role === 'director' ? <DirectorPortal user={user} /> : <Navigate to="/login" />
           }>
             <Route index element={<Navigate to="dashboard" replace />} />
-            <Route path="dashboard" element={<div>Director Dashboard Overview</div>} />
+            <Route path="dashboard" element={
+              <div className="p-6">
+                <h1 className="text-3xl font-bold text-gray-800 mb-6">Director Dashboard</h1>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  <div className="bg-white rounded-lg shadow-sm p-6">
+                    <h3 className="text-lg font-semibold mb-2">School Overview</h3>
+                    <p className="text-gray-600">Total Students: 1,245</p>
+                    <p className="text-gray-600">Total Teachers: 48</p>
+                    <p className="text-gray-600">Attendance Rate: 94%</p>
+                  </div>
+                  <div className="bg-white rounded-lg shadow-sm p-6">
+                    <h3 className="text-lg font-semibold mb-2">Recent Activities</h3>
+                    <p className="text-gray-600">New enrollments: 12</p>
+                    <p className="text-gray-600">Staff updates: 3</p>
+                    <p className="text-gray-600">System alerts: 0</p>
+                  </div>
+                  <div className="bg-white rounded-lg shadow-sm p-6">
+                    <h3 className="text-lg font-semibold mb-2">Quick Actions</h3>
+                    <button
+                      onClick={() => navigate('/director/students')}
+                      className="block w-full text-left text-blue-600 hover:text-blue-800 mb-2"
+                    >
+                      Manage Students
+                    </button>
+                    <button
+                      onClick={() => navigate('/director/reports')}
+                      className="block w-full text-left text-blue-600 hover:text-blue-800 mb-2"
+                    >
+                      Generate Reports
+                    </button>
+                    <button
+                      onClick={() => navigate('/director/settings')}
+                      className="block w-full text-left text-blue-600 hover:text-blue-800"
+                    >
+                      System Settings
+                    </button>
+                  </div>
+                </div>
+              </div>
+            } />
             <Route path="students" element={<StudentManagement />} />
             <Route path="reports" element={<ReportGenerator />} />
             <Route path="settings" element={<SystemSettings />} />
@@ -135,6 +186,10 @@ function App() {
 
           <Route path="/director/students" element={
             user?.role === 'director' ? <Navigate to="/director/students" replace /> : <Navigate to="/login" />
+          } />
+
+          <Route path="/director/settings" element={
+            user?.role === 'director' ? <Navigate to="/director/settings" replace /> : <Navigate to="/login" />
           } />
 
           {/* 404 Page */}
